@@ -1,0 +1,17 @@
+{
+  "name": "@feblr/ui",
+  "version": "1.0.0",
+  "description": "UI components for feblr.com",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mrchangji@outlook.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
