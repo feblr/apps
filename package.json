@@ -20,7 +20,10 @@
   },
   "homepage": "https://github.com/feblr-org/feblr#readme",
   "workspaces": [
-    "packages/desktop"
+    "packages/browser",
+    "packages/desktop",
+    "packages/mobile",
+    "packages/ui"
   ],
   "devDependencies": {
     "lerna": "^5.3.0"
