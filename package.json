@@ -1,28 +1,29 @@
 {
   "name": "feblr",
   "version": "0.1.0",
-  "description": "official client for www.feblr.com",
+  "description": "official applications of www.feblr.com",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/feblr-org/feblr.git"
+    "url": "git+https://github.com/feblr/apps.git"
   },
   "keywords": [
-    "Official"
+    "Official Repo of www.feblr.com applications"
   ],
-  "author": "Feblr",
+  "author": "Ji Chang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/feblr-org/feblr/issues"
+    "url": "https://github.com/feblr/apps/issues"
   },
-  "homepage": "https://github.com/feblr-org/feblr#readme",
+  "homepage": "https://github.com/feblr/apps#readme",
   "workspaces": [
     "packages/browser",
     "packages/desktop",
     "packages/mobile",
+    "packages/server",
     "packages/ui"
   ],
   "devDependencies": {
