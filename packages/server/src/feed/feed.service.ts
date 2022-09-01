@@ -1,36 +1,69 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { SQLITE_PROVIDER } from '../sqlite';
-import { Feed } from "feed";
+import { Feed } from 'feed';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import * as path from 'path';
+import * as fs from 'fs';
+import * as util from 'util';
 
-const feed = new Feed({
-    title: "Feed Title",
-    description: "This is my personal feed!",
-    id: "http://example.com/",
-    link: "http://example.com/",
-    language: "en", // optional, used only in RSS 2.0, possible values: http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
-    image: "http://example.com/image.png",
-    favicon: "http://example.com/favicon.ico",
-    copyright: "All rights reserved 2013, John Doe",
-    updated: new Date(2013, 6, 14), // optional, default = today
-    generator: "awesome", // optional, default = 'Feed for Node.js'
-    feedLinks: {
-        json: "https://example.com/json",
-        atom: "https://example.com/atom"
-    },
-    author: {
-        name: "John Doe",
-        email: "johndoe@example.com",
-        link: "https://example.com/johndoe"
-    }
-});
+export const FEED_FILE_NAME = 'website.rss';
+export const FEED_FILE_PATH = path.join(process.cwd(), FEED_FILE_NAME);
+
+const GENERATE_INTERVAL =
+  process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'debug'
+    ? CronExpression.EVERY_MINUTE
+    : CronExpression.EVERY_HOUR;
 
 @Injectable()
 export class FeedService {
-    constructor(@Inject(SQLITE_PROVIDER.provide) private database) { }
+  isGenerating: boolean = false;
+  logger = new Logger(FeedService.name);
 
-    read() {
-        return feed.rss2();
+  constructor(@Inject(SQLITE_PROVIDER.provide) private database) { }
+
+  @Cron(GENERATE_INTERVAL)
+  async generate() {
+    if (this.isGenerating) {
+      this.logger.log('generating feed: skip');
+      return;
     }
 
-    async update() { }
+    this.logger.log('generating feed: start');
+    this.isGenerating = true;
+
+    try {
+      const feed = new Feed({
+        title: 'Feblr Offical',
+        description: 'This is offical feed of www.feblr.com!',
+        id: 'https://www.feblr.com/',
+        link: 'https://www.feblr.com/',
+        language: 'en',
+        image: 'https://www.feblr.com/image.png',
+        favicon: 'https://www.feblr.com/favicon.ico',
+        copyright: 'All rights reserved 2022, Feblr',
+        updated: new Date(),
+        generator: 'Feblr Feed',
+        feedLinks: {
+          rss: 'https://www.feblr.com/website.rss'
+        },
+        author: {
+          name: 'Feblr',
+          email: 'dont@www.feblr.com',
+          link: 'https://www.feblr.com/',
+        },
+      });
+
+      const content = feed.rss2();
+      const writeFile = util.promisify(fs.writeFile);
+      await writeFile(FEED_FILE_PATH, content, {
+        encoding: 'utf-8',
+      });
+    } catch (e: any) {
+      this.logger.log('generating feed: abort');
+      this.logger.error(e, e.stack);
+    } finally {
+      this.logger.log('generating feed: stop');
+      this.isGenerating = false;
+    }
+  }
 }

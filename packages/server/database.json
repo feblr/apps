@@ -1,0 +1,10 @@
+{
+    "development": {
+        "driver": "sqlite3",
+        "filename": "feblr.db"
+    },
+    "production": {
+        "driver": "sqlite3",
+        "filename": "feblr.db"
+    }
+}

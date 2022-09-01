@@ -1,2 +1,2 @@
 # feblr
-Official client for www.feblr.com
+Official applications for www.feblr.com

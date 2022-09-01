@@ -1,13 +1,15 @@
-import { Controller, Get, Header } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Header, Res } from '@nestjs/common';
+import { createReadStream } from 'fs';
+import { FEED_FILE_NAME, FEED_FILE_PATH } from './feed/feed.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor() {}
 
-  @Get('/rss.xml')
-  @Header("Content-Type", "application/xml")
-  getRSS(): string {
-    return this.appService.getFeed();
+  @Get(FEED_FILE_NAME)
+  @Header('Content-Type', 'application/xml')
+  getRSS(@Res() res) {
+    const file = createReadStream(FEED_FILE_PATH);
+    file.pipe(res);
   }
 }
