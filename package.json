@@ -23,6 +23,7 @@
     "packages/browser",
     "packages/desktop",
     "packages/mobile",
+    "packages/model",
     "packages/server",
     "packages/ui"
   ],
