@@ -1,7 +1,16 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Delete, HttpCode, Post } from '@nestjs/common';
+import { Feed } from '@feblr/model';
+import { FeedService } from './feed.service';
 
-@Controller('feed')
+@Controller('/api/v1/feeds')
 export class FeedController {
-    @Post()
-    createItem() { }
+  constructor(private feedService: FeedService) {}
+
+  @Post('/')
+  async createFeed(@Body() feed: Feed) {
+    return await this.feedService.create(feed);
+  }
+
+  @Delete('/:feedId')
+  async removeFeed() {}
 }

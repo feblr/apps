@@ -5,8 +5,14 @@ describe('FeedService', () => {
   let service: FeedService;
 
   beforeEach(async () => {
+    const sqlite = {
+      provide: 'SQLITE_PROVIDER',
+      useFactory: async () => {
+        return {};
+      },
+    };
     const module: TestingModule = await Test.createTestingModule({
-      providers: [FeedService],
+      providers: [FeedService, sqlite],
     }).compile();
 
     service = module.get<FeedService>(FeedService);

@@ -1,10 +1,8 @@
 import * as sqlite3 from 'sqlite3';
 import { open, Database } from 'sqlite';
+import { isDebug } from './config';
 
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.NODE_ENV === 'debug'
-) {
+if (isDebug) {
   sqlite3.verbose();
 }
 

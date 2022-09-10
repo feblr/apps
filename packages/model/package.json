@@ -2,14 +2,19 @@
   "name": "@feblr/model",
   "version": "0.1.0",
   "description": "model definition of feblr",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tsc && tape test/**/*.test.js"
   },
   "author": "Ji Chang",
   "license": "MIT",
   "dependencies": {
+    "@types/node": "^18.7.16",
+    "@types/tape": "^4.13.2",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
+    "tape": "^5.6.0",
     "typescript": "^4.8.2"
   }
 }

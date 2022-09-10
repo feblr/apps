@@ -1,7 +1,6 @@
 /* Replace with your SQL commands */
 CREATE TABLE IF NOT EXISTS feeds (
-    id bigint primary key,
-    publisher varchar not null,
+    id varchar primary key,
     content json not null,
     created_at datetime not null,
     updated_at datetime,
