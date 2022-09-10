@@ -1,11 +1,9 @@
 import { webcrypto } from "node:crypto";
 import test from "tape";
-import { arrayBufferToHex } from "../src/convert";
 import {
   PublicKeyExportFormat,
   Feed,
   KeyGenParams,
-  KeyUsages,
   generateKey,
   sign,
   SignHashAlgorithm,

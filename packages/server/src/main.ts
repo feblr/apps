@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
-import * as csurf from 'csurf';
 import { ValidationPipe } from '@nestjs/common';
 import { isDebug } from './config';
 
@@ -14,8 +13,7 @@ async function bootstrap() {
     }),
   );
   app.use(helmet());
-  app.use(csurf());
   app.enableCors();
-  await app.listen(3000);
+  await app.listen(4000);
 }
 bootstrap();

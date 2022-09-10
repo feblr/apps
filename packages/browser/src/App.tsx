@@ -8,7 +8,6 @@ import {
   PublicKeyExportFormat,
   sign,
   SignHashAlgorithm,
-  verify,
 } from "@feblr/model";
 
 function App() {
@@ -36,10 +35,15 @@ function App() {
       console.log(feed);
       const signature = await sign(subtle, privateKey, feed);
       feed.signature.value = signature;
-      console.log(feed);
 
-      const result = await verify(subtle, feed);
-      console.log(result);
+      const response = await fetch("/api/v1/feeds", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(feed),
+      });
+      console.log(response.status);
     }
 
     init();

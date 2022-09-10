@@ -25,14 +25,13 @@ export class FeedService {
     try {
       const result = await this.database.run(
         `
-      INSERT INTO feeds(id, content)
-      VALUES (:id, :content)
-      ON CONFLICTS(id) DO UPDATE SET content = :content, updated_at = :now
+      INSERT INTO feeds(id, content, created_at)
+      VALUES (:id, :content, unixepoch())
+      ON CONFLICT(id) DO UPDATE SET content = :content, updated_at = unixepoch()
       `,
         {
-          id: feed.id,
-          content: JSON.stringify(feed),
-          now: Date.now(),
+          ':id': feed.id,
+          ':content': JSON.stringify(feed),
         },
       );
 
